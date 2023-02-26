@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notesapp/screens/note_editor.dart';
 import 'package:notesapp/screens/note_reader.dart';
 import 'package:notesapp/style/app_style.dart';
 import 'package:notesapp/widgets/note_card.dart';
@@ -57,9 +58,8 @@ class _HomePageState extends State<HomePage> {
                               crossAxisCount: 2),
                       children: snapshot.data!.docs
                           .map((note) => noteCard(
-                              () => Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
+                              () =>
+                                  Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         NoteReaderScreen(note),
                                   )),
@@ -78,7 +78,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => NoteEditorScreen(),
+        )),
         label: const Text('Add Note'),
         icon: const Icon(Icons.add),
       ),
