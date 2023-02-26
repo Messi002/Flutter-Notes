@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notesapp/style/app_style.dart';
+import 'package:notesapp/widgets/note_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,29 +38,35 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 22.0,
               ),
-              StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('Notes').snapshots(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator.adaptive(),
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream:
+                      FirebaseFirestore.instance.collection('Notes').snapshots(),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      );
+                    }
+              
+                    if (snapshot.hasData) {
+                      return GridView(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2),
+                              children: snapshot.data!.docs.map((note) => noteCard((){}, note)).toList(),
+                              );
+                    }
+                    return Text(
+                      'No Notes Available',
+                      style: GoogleFonts.nunito(color: Colors.white),
                     );
-                  }
-
-                  if (snapshot.hasData) {
-                    return GridView(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2));
-                  }
-                  return Text(
-                    'No Notes Available',
-                    style: GoogleFonts.nunito(color: Colors.white),
-                  );
-                },
+                  },
+                ),
               )
             ],
           ),
-        ));
+        ),
+        floatingActionButton: FloatingActionButton.extended(onPressed: (){}, label: const Text('Add Note'), icon: const Icon(Icons.add),),
+        );
   }
 }
