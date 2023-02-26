@@ -19,7 +19,7 @@ class AppStyle {
   ];
 
   //Setting the text style
-  static TextStyle mainTitle = GoogleFonts.roboto();
-  static TextStyle mainContent = GoogleFonts.nunito();
-  static TextStyle dateTile = GoogleFonts.roboto();
+  static TextStyle mainTitle = GoogleFonts.roboto(fontSize: 18.0,fontWeight: FontWeight.bold);
+  static TextStyle mainContent = GoogleFonts.nunito(fontSize: 16.0, fontWeight: FontWeight.normal);
+  static TextStyle dateTile = GoogleFonts.roboto(fontSize: 13.0, fontWeight: FontWeight.w500);
 }
