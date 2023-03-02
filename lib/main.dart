@@ -24,3 +24,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+         R2
+Vo = Vi --- * (1/jwC1) * R3
+        R1 + R2 + (1/jwC1) * R3
